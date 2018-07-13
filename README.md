@@ -1,2 +1,0 @@
-# AssetBrowserReact
-Created with CodeSandbox

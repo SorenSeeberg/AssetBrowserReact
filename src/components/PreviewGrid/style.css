@@ -1,5 +1,12 @@
 :root {
   --preview-image-width: calc(100vw / 3 - 10px);
+  --selection-color: rgba(10, 10, 10, 1);
+  --selection-color-075: rgba(10, 10, 10, 0.75);
+  --black-transparent: rgba(0, 0, 0, 0);
+  --black-full: rgba(0, 0, 0, 1);
+  --transition-time-035: 0.35s;
+  --transition-time-025: 0.25s;
+  --transition-time-02: 0.2s;
 }
 
 .preview-grid {
@@ -8,44 +15,45 @@
 }
 
 .preview-grid-container {
+  transition: background var(--transition-time-025) ease;
   display: flex;
-  flex: 1 0 25%;
-  margin: 2px;
+  flex: 1 0 26%;
   color: #fac863;
-  /*align-items: stretch;*/
-  background: #333;
+  background: #191919;
   height: var(--preview-image-width);
   align-items: center;
   justify-content: center;
 }
 
 .preview-grid-image {
-  transition: all 0.5s ease;
+  transition: all var(--transition-time-035) ease;
   padding: 0;
   margin: 0;
   border: none;
-  width: calc(100% - 40px);
-  height: calc(100% - 40px);
+  width: calc(100% - 14px);
+  height: calc(100% - 14px);
 }
 
-.preview-grid-image-overlay:hover ~ .preview-grid-image {
-  width: 100%;
-  height: 100%;
+.preview-grid-image-overlay:hover ~ .preview-grid-image,
+div.selected > .preview-grid-image {
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
 }
 
 .preview-grid-image-infobox {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s ease;
+  transition: all var(--transition-time-035) ease;
   width: var(--preview-image-width);
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--selection-color-075);
   opacity: 0;
   height: 15px;
 }
 
 .preview-grid-image-overlay {
-  transition: all 0.25s ease;
+  box-sizing: border-box;
+  transition: all var(--transition-time-02) ease;
   position: absolute;
   height: var(--preview-image-width);
   display: flex;
@@ -54,11 +62,21 @@
   background: rgba(0, 0, 0, 0.2);
 }
 
-.preview-grid-image-overlay:hover {
-  background: rgba(0, 0, 0, 0);
+.preview-grid-image-overlay:hover,
+div.selected > div.preview-grid-image-overlay {
+  background: var(--black-transparent);
 }
 
-.preview-grid-image-overlay:hover > .preview-grid-image-infobox {
+.preview-grid-image-overlay:hover > .preview-grid-image-infobox,
+div.selected > div.preview-grid-image-overlay div.preview-grid-image-infobox {
   opacity: 1;
   height: 25px;
+}
+
+.selected {
+  background: var(--selection-color);
+}
+
+div.selected > div.preview-grid-image-overlay div.preview-grid-image-infobox {
+  background: var(--black-full);
 }

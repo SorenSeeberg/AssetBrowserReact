@@ -17,7 +17,7 @@
 .preview-grid-container {
   transition: background var(--transition-time-025) ease;
   display: flex;
-  flex: 1 0 26%;
+  flex: 1 0 30%;
   color: #fac863;
   background: #191919;
   height: var(--preview-image-width);

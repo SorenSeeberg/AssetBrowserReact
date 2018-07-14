@@ -1,6 +1,16 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
 .App {
   font-family: sans-serif;
   text-align: center;
   background: #222;
   color: #6caedd;
+  margin: 0;
+  padding: 0;
+  border: none;
 }

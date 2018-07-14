@@ -1,6 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import TopBar from "./components/TopBar";
+import { TopBarTitle } from "./components/TopBar";
 import PreviewGrid from "./components/PreviewGrid";
+import SearchBar from "./components/SearchField";
 import "./styles.css";
 
 const metaData = [
@@ -94,7 +97,10 @@ const metaData = [
 function App() {
   return (
     <div className="App">
-      <h1>Preview Grid</h1>
+      <TopBar>
+        <TopBarTitle text={"Asset Browser v. 0.1"} />
+        <SearchBar placeholder={"Asset Search . . ."} />
+      </TopBar>
       <PreviewGrid metaData={metaData} />
     </div>
   );

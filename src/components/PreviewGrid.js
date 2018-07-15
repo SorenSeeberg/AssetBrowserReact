@@ -3,7 +3,7 @@ import {
   COLOR_ACCENT_BLUE,
   COLOR_ACCENT_BLUE_SHADOW,
   COLOR_BLACK_0,
-  COLOR_BLACK_15,
+  COLOR_BLACK_35,
   COLOR_BLACK_FULL,
   TRANSITION_TIME_0035,
   TRANSITION_TIME_0025,
@@ -92,7 +92,7 @@ class PreviewContainer extends React.Component {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background: ${COLOR_BLACK_15};
+            background: ${COLOR_BLACK_35};
           }
 
           /* overlay:hover, select */
@@ -130,12 +130,16 @@ class PreviewContainer extends React.Component {
 export default class PreviewGrid extends React.Component {
   state = {
     selection: [],
-    imagesPerRow: 9,
-    innerWidth: window.innerWidth,
+    imagesPerRow: 5,
+    innerWidth: document.body.clientWidth,
     containerLength: 0
   };
 
   resize = () => this.forceUpdate();
+
+  documentWidth = () => {
+    return document.body.clientWidth;
+  };
 
   componentDidMount = () => {
     window.addEventListener("resize", this.resize);
@@ -144,8 +148,10 @@ export default class PreviewGrid extends React.Component {
         { length: this.props.metaData.length },
         (x, i) => false
       ),
-      containerLength: Math.floor(window.innerWidth / this.state.imagesPerRow),
-      innerWidth: window.innerWidth
+      containerLength: Math.floor(
+        this.documentWidth() / this.state.imagesPerRow
+      ),
+      innerWidth: this.documentWidth()
     });
   };
 
@@ -154,12 +160,12 @@ export default class PreviewGrid extends React.Component {
   }
 
   componentDidUpdate() {
-    if (window.innerWidth !== this.state.innerWidth) {
+    if (this.documentWidth() !== this.state.innerWidth) {
       this.setState({
         containerLength: Math.floor(
-          window.innerWidth / this.state.imagesPerRow
+          this.documentWidth() / this.state.imagesPerRow
         ),
-        innerWidth: window.innerWidth
+        innerWidth: this.documentWidth()
       });
     }
   }

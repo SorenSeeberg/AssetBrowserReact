@@ -6,6 +6,8 @@ import PreviewGrid from "./components/PreviewGrid";
 import SearchBar from "./components/SearchField";
 import "./styles.css";
 
+const tags = {};
+
 const metaData = [
   {
     name: "wall_old_stone_001.png",
@@ -98,7 +100,7 @@ function App() {
   return (
     <div className="App">
       <TopBar>
-        <TopBarTitle text={"Asset Browser v. 0.1"} />
+        <TopBarTitle text={"Asset Browser"} />
         <SearchBar placeholder={"Asset Search . . ."} />
       </TopBar>
       <PreviewGrid metaData={metaData} />

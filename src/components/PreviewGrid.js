@@ -4,11 +4,36 @@ import {
   COLOR_ACCENT_BLUE_SHADOW,
   COLOR_BLACK_0,
   COLOR_BLACK_35,
-  COLOR_BLACK_FULL,
+  COLOR_GRAY_3,
   TRANSITION_TIME_0035,
   TRANSITION_TIME_0025,
   TRANSITION_TIME_0020
 } from "../themes/dark";
+import { MQ_VIEW_MEDIUM, MQ_VIEW_SMALL } from "../themes/mediaQueries";
+
+const previewSize = length => {
+  let newClass = "";
+  if (length < 160) {
+    newClass = "small";
+  } else if (length < 200) {
+    newClass = "medium";
+  } else if (length < 250) {
+    newClass = "normal";
+  } else if (length < 320) {
+    newClass = "large";
+  } else {
+    newClass = "xlarge";
+  }
+  return newClass;
+};
+
+const sizeConstants = {
+  small: { fontSize: "8px", height: "10px" },
+  medium: { fontSize: "10px", height: "12px" },
+  normal: { fontSize: "12px", height: "15px" },
+  large: { fontSize: "14px", height: "18px" },
+  xlarge: { fontSize: "20px", height: "24px" }
+};
 
 class PreviewContainer extends React.Component {
   render() {
@@ -17,6 +42,7 @@ class PreviewContainer extends React.Component {
       selected,
       onClick,
       containerLength,
+      previewSize = "small",
       imagesPerRow
     } = this.props;
 
@@ -24,10 +50,10 @@ class PreviewContainer extends React.Component {
       <React.Fragment>
         <div className={`preview-grid-container ${selected && "selected"}`}>
           <div className="preview-grid-image-overlay" onClick={onClick}>
-            <div className="preview-grid-image-infobox">{data.name}</div>
-            <div className="preview-grid-image-infobox">{`[ ${data.x} x ${
+            <div className={`preview-grid-image-infobox`}>{data.name}</div>
+            <div className={`preview-grid-image-infobox`}>{`[ ${data.x} x ${
               data.y
-            } @ ${data.depth}-bit ${data.channels}]`}</div>
+            } @ ${data.depth}-bit ${data.channels} ]`}</div>
           </div>
           <img
             className="preview-grid-image"
@@ -41,7 +67,7 @@ class PreviewContainer extends React.Component {
             display: flex;
             flex: 0 0 ${100 / imagesPerRow}%;
             color: black;
-            background: #191919;
+            background: ${COLOR_GRAY_3};
             height: ${containerLength}px;
             align-items: center;
             justify-content: center;
@@ -85,6 +111,28 @@ class PreviewContainer extends React.Component {
             font-weight: bold;
           }
 
+          /* info-box:selected, info-box:hover */
+          .preview-grid-image-overlay:hover > .preview-grid-image-infobox,
+          div.selected
+            > div.preview-grid-image-overlay
+            div.preview-grid-image-infobox {
+            opacity: 1;
+          }
+
+          /* info-box */
+          .preview-grid-image-infobox {
+            height: ${sizeConstants[previewSize].height};
+            font-size: ${sizeConstants[previewSize].fontSize};
+          }
+
+        /* info-box:selected */
+        .preview-grid-image-overlay:hover > .preview-grid-image-infobox,
+        div.selected
+          > div.preview-grid-image-overlay
+            div.preview-grid-image-infobox {
+            height: ${sizeConstants[previewSize].height};
+          }
+ 
           .preview-grid-image-overlay {
             transition: background ${TRANSITION_TIME_0020} ease;
             position: absolute;
@@ -99,15 +147,6 @@ class PreviewContainer extends React.Component {
           .preview-grid-image-overlay:hover,
           .selected > .preview-grid-image-overlay {
             background: ${COLOR_BLACK_0};
-          }
-
-          /* info-box:selected */
-          .preview-grid-image-overlay:hover > .preview-grid-image-infobox,
-          div.selected
-            > div.preview-grid-image-overlay
-            div.preview-grid-image-infobox {
-            opacity: 1;
-            height: 25px;
           }
 
           /* border-color:selected*/
@@ -130,12 +169,20 @@ class PreviewContainer extends React.Component {
 export default class PreviewGrid extends React.Component {
   state = {
     selection: [],
-    imagesPerRow: 5,
+    imagesPerRow: 3,
     innerWidth: document.body.clientWidth,
-    containerLength: 0
+    containerLength: 0,
+    previewSize: "small"
   };
 
   resize = () => this.forceUpdate();
+
+  handlePreviewSizeChange = length => {
+    const size = previewSize(length);
+    if (size !== this.state.previewSize) {
+      this.setState({ previewSize: size });
+    }
+  };
 
   documentWidth = () => {
     return document.body.clientWidth;
@@ -161,12 +208,14 @@ export default class PreviewGrid extends React.Component {
 
   componentDidUpdate() {
     if (this.documentWidth() !== this.state.innerWidth) {
+      const newLength = Math.floor(
+        this.documentWidth() / this.state.imagesPerRow
+      );
       this.setState({
-        containerLength: Math.floor(
-          this.documentWidth() / this.state.imagesPerRow
-        ),
+        containerLength: newLength,
         innerWidth: this.documentWidth()
       });
+      this.handlePreviewSizeChange(newLength);
     }
   }
 
@@ -191,6 +240,7 @@ export default class PreviewGrid extends React.Component {
               onClick={() => this.handleClick(i)}
               imagesPerRow={imagesPerRow}
               containerLength={containerLength}
+              previewSize={this.state.previewSize}
             />
           ))}
         </div>

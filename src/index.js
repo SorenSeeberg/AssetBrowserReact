@@ -3,10 +3,68 @@ import ReactDOM from "react-dom";
 import TopBar from "./components/TopBar";
 import { TopBarTitle } from "./components/TopBar";
 import PreviewGrid from "./components/PreviewGrid";
+import CategoryOverview from "./components/CategoryOverview";
 import SearchBar from "./components/SearchField";
 import "./styles.css";
 
-const tags = {};
+const tags = {
+  assetTypes: {
+    id: "GUID01",
+    type: "category",
+    mutuallyExclusive: true,
+    dependsOn: [],
+    name: "Asset Types",
+    color: "#123456",
+    tags: {
+      texture: {
+        id: "GUID02",
+        type: "tag",
+        parentId: "GUID01",
+        name: "Texture"
+      },
+      mesh: {
+        id: "GUID03",
+        type: "tag",
+        parentId: "GUID01",
+        name: "Mesh"
+      }
+    }
+  },
+  physicalTraits: {
+    id: "GUID04",
+    type: "category",
+    mutuallyExclusive: true,
+    dependsOn: ["GUID01"],
+    name: "Asset Types",
+    color: "#123456",
+    tags: {
+      wall: {
+        id: "GUID05",
+        type: "tag",
+        parentId: "GUID04",
+        name: "Wall"
+      },
+      floor: {
+        id: "GUID06",
+        type: "tag",
+        parentId: "GUID04",
+        name: "Floor"
+      },
+      tiles: {
+        id: "GUID07",
+        type: "tag",
+        parentId: "GUID04",
+        name: "Tiles"
+      },
+      weathered: {
+        id: "GUID08",
+        type: "tag",
+        parentId: "GUID04",
+        name: "Weathered"
+      }
+    }
+  }
+};
 
 const metaData = [
   {
@@ -107,6 +165,8 @@ function App() {
     </div>
   );
 }
+
+// <CategoryOverview />
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);

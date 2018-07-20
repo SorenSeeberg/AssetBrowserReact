@@ -1,4 +1,5 @@
 import React from "react";
+import { COLOR_GRAY_4, COLOR_GRAY_6 } from "../themes/dark";
 
 export default class SearchField extends React.Component {
   state = {};
@@ -19,7 +20,7 @@ export default class SearchField extends React.Component {
             padding-left: 5px;
             outline: 0;
             transition: all 0.2s ease;
-            background: #222;
+            background: ${COLOR_GRAY_4};
             color: white;
             border: none;
             border-radius: 4px;
@@ -34,7 +35,7 @@ export default class SearchField extends React.Component {
           }
 
           .search-field::placeholder {
-            color: #444;
+            color: ${COLOR_GRAY_6};
             opacity: 1;
           }
         `}</style>

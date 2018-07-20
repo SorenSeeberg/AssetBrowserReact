@@ -1,4 +1,5 @@
 import React from "react";
+import { COLOR_GRAY_3, COLOR_GRAY_6 } from "../themes/dark";
 
 export default class TopBar extends React.Component {
   render() {
@@ -15,7 +16,7 @@ export default class TopBar extends React.Component {
             flex-direction: row;
             height: 50px;
             width: 100%;
-            background: #191919;
+            background: ${COLOR_GRAY_3};
             align-items: center;
             justify-content: left;
             z-index: 100;

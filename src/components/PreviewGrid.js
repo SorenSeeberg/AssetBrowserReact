@@ -1,19 +1,19 @@
-import React from 'react';
-import { PreviewContext } from '../index';
-import PreviewContainer from './PreviewContainer';
+import React from "react";
+import { PreviewContext } from "../index";
+import PreviewContainer from "./PreviewContainer";
 
 const previewSize = length => {
-  let newClass = '';
+  let newClass = "";
   if (length < 160) {
-    newClass = 'small';
+    newClass = "small";
   } else if (length < 200) {
-    newClass = 'medium';
+    newClass = "medium";
   } else if (length < 250) {
-    newClass = 'normal';
+    newClass = "normal";
   } else if (length < 320) {
-    newClass = 'large';
+    newClass = "large";
   } else {
-    newClass = 'xlarge';
+    newClass = "xlarge";
   }
   return newClass;
 };
@@ -23,10 +23,10 @@ const SCROLLBAR_WIDTH = 20;
 export default class PreviewGrid extends React.Component {
   state = {
     selection: [],
-    imagesPerRow: 3,
+    imagesPerRow: 4,
     innerWidth: document.body.clientWidth,
     containerLength: 0,
-    previewSize: 'small'
+    previewSize: "small"
   };
 
   resize = () => this.forceUpdate();
@@ -43,7 +43,7 @@ export default class PreviewGrid extends React.Component {
   };
 
   componentDidMount = () => {
-    window.addEventListener('resize', this.resize);
+    window.addEventListener("resize", this.resize);
     this.setState({
       selection: Array.from(
         { length: this.props.previewCount },
@@ -57,7 +57,7 @@ export default class PreviewGrid extends React.Component {
   };
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize);
+    window.removeEventListener("resize", this.resize);
   }
 
   componentDidUpdate() {

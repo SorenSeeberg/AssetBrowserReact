@@ -13,6 +13,9 @@
     "tinycolor2": "1.4.1"
   },
   "devDependencies": {},
+  "standard": {
+    "parser": "babel-eslint"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
